@@ -13,8 +13,26 @@
   <script defer src="./script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(console.error);
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.register('./service-worker.js', { scope: './' });
+          reg.update();
+          if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          reg.addEventListener('updatefound', () => {
+            const sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', () => {
+              if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+                location.reload();
+              }
+            });
+          });
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            location.reload();
+          });
+        } catch (e) {
+          console.error(e);
+        }
       });
     }
   </script>
@@ -35,12 +53,12 @@
       </h1>
 
       <div class="row">
-        <input id="real" placeholder="Es. 1:200 • 0,5 • 1/2" inputmode="decimal" autocomplete="off">
+        <input id="real" placeholder="Es. 1:200 • 0,5 • 1/2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
       </div>
 
     <h2>Scala autocad in mm</h2>
     <div class="row">
-      <input id="acad" placeholder="Es. 1000:200 • 5 • 5/1" inputmode="decimal" autocomplete="off">
+        <input id="acad" placeholder="Es. 1000:200 • 5 • 5/1" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
     </div>
 
     <div class="row buttons">
