@@ -1,6 +1,6 @@
 {
-  "name": "ScaleX",
-  "short_name": "ScaleX",
+  "name": "CADScale",
+  "short_name": "CADScale",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
