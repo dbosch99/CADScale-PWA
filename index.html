@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ScaleX • Reale ↔ AutoCAD</title>
+  <meta name="theme-color" content="#111318">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./512x512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./512x512.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(console.error);
+      });
+    }
+  </script>
+</head>
+<body>
+  <main class="card">
+      <h1 class="title">
+        Scala modello in
+        <select id="unit" class="unit-pick" aria-label="Unità modello">
+          <option>mm</option>
+          <option>cm</option>
+          <option>dm</option>
+          <option selected>m</option>
+          <option>dam</option>
+          <option>hm</option>
+          <option>km</option>
+        </select>
+      </h1>
+
+      <div class="row">
+        <input id="real" placeholder="Es. 1:200 • 0,5 • 1/2" inputmode="decimal" autocomplete="off">
+      </div>
+
+    <h2>Scala autocad in mm</h2>
+    <div class="row">
+      <input id="acad" placeholder="Es. 1000:200 • 5 • 5/1" inputmode="decimal" autocomplete="off">
+    </div>
+
+    <div class="row buttons">
+      <button id="calc">Calcola</button>
+      <button id="reset" class="secondary">Reset</button>
+      <span id="error" class="error"></span>
+    </div>
+  </main>
+</body>
+</html>

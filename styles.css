@@ -1,0 +1,126 @@
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --text: #e7ebf2;
+  --muted: #9aa3af;
+  --accent: #3b82f6;
+  --error: #ef4444;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.4;
+
+  /* --- centratura e comportamento --- */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100%;
+  padding: 20px;
+
+  /* --- per compatibilità mobile (come CuCu) --- */
+  overflow-x: auto;                   /* scroll orizzontale se troppo stretto */
+  -webkit-overflow-scrolling: touch;  /* scorrimento fluido su iOS */
+  touch-action: pan-x pan-y;          /* gesti touch */
+}
+
+.card {
+  width: 100%;
+  max-width: 800px;      /* come CuCu */
+  min-width: 335px;      /* come CuCu */
+  margin: 0 auto;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+h1, h2 { margin: 0 0 10px; }
+h1 { font-size: 20px; }
+h2 { font-size: 18px; margin-top: 18px; }
+
+/* Righe principali (una sola colonna: input a piena larghezza) */
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* Titolo con selettore accanto (stile app macOS) */
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.unit-pick {
+  width: 84px;                    /* selettore compatto */
+  background: #0e1116;
+  color: var(--text);
+  border: 1px solid #2a2f3a;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.unit-pick:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+}
+
+/* riga pulsanti */
+.row.buttons {
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  margin-top: 14px;
+}
+
+label { color: var(--muted); }
+
+select, input {
+  width: 100%;
+  max-width: none;           /* niente limite: riempie la colonna */
+  background: #0e1116;
+  color: var(--text);
+  border: 1px solid #2a2f3a;
+  padding: 12px 14px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+}
+
+button {
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: white;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button.secondary { background: transparent; border-color: #2a2f3a; color: var(--text); }
+button:disabled { opacity: .6; cursor: default; }
+
+.error { color: var(--error); font-size: 14px; padding-left: 12px; }
+
+.hint { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+
+/* Campo di output: stesso stile, ma non editabile e non selezionabile */
+.readonly {
+  pointer-events: none;      /* non cliccabile */
+  user-select: none;         /* non selezionabile */
+  caret-color: transparent;  /* niente cursore */
+  opacity: 1;                /* niente grigetto */
+}
