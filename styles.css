@@ -41,9 +41,15 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
 
-h1, h2 { margin: 0 0 10px; }
-h1 { font-size: 20px; }
-h2 { font-size: 18px; margin-top: 18px; }
+h1.title,
+h2 {
+  font-size: 12px;           /* stessa dimensione per entrambe */
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 16px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
 
 /* Righe principali (una sola colonna: input a piena larghezza) */
 .row {
