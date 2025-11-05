@@ -74,6 +74,11 @@ real.addEventListener('focus', ()=> { source='real'; updateReadOnly(); });
 acad.addEventListener('focus', ()=> { source='acad'; updateReadOnly(); });
 unitSel.addEventListener('change', ()=> updateReadOnly());
 
+// permette di calcolare anche premendo Invio
+function onEnter(e){ if (e.key === 'Enter') calc.click(); }
+real.addEventListener('keydown', onEnter);
+acad.addEventListener('keydown', onEnter);
+
 calc.addEventListener('click', ()=>{
   errorEl.textContent = '';
   const u = mmPerUnit[unitSel.value];
