@@ -1,41 +1,84 @@
-const CACHE_NAME = 'cadscale-v1';
+// === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
+const CACHE = 'cadscale-2025-11-05-1';
+// ==========================================================================
 
+// Asset della PWA (percorsi assoluti, niente ?v=… necessari)
 const ASSETS = [
-  './',
-  './index.html',
-  './styles.css',
-  './script.js',
-  './manifest.json',
-  './192x192.png',
-  './512x512.png'
+  '/CADScale-PWA/',
+  '/CADScale-PWA/index.html',
+  '/CADScale-PWA/styles.css',
+  '/CADScale-PWA/script.js',
+  '/CADScale-PWA/manifest.json',
+  '/CADScale-PWA/cadscale-16.png',
+  '/CADScale-PWA/cadscale-32.png',
+  '/CADScale-PWA/cadscale-180.png',
+  '/CADScale-PWA/cadscale-192.png',
+  '/CADScale-PWA/cadscale-512.png'
 ];
 
-// Installa subito e mette in cache i file principali
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
-  self.skipWaiting();
+// Install: cache degli asset di shell
+self.addEventListener('install', (event) => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await cache.addAll(ASSETS);
+    await self.skipWaiting();
+  })());
 });
 
-// Rimuove le cache vecchie e attiva subito la nuova
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : null))
-    )
-  );
-  self.clients.claim();
+// Activate: elimina cache precedenti
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
-// Strategia: prima la rete, se offline usa la cache
-self.addEventListener('fetch', event => {
+// Messaggi dalla pagina (usato dal tuo index.html per SKIP_WAITING)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
+// Fetch:
+//  - HTML/manifest/SW → network-first (per aggiornarsi subito)
+//  - il resto → cache-first (veloce/offline)
+self.addEventListener('fetch', (event) => {
   const req = event.request;
-  event.respondWith(
-    fetch(req).then(res => {
-      const resClone = res.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put(req, resClone));
-      return res;
-    }).catch(() => caches.match(req))
-  );
+  const url = new URL(req.url);
+
+  // Documenti / navigazioni
+  if (req.mode === 'navigate' || req.destination === 'document') {
+    event.respondWith(networkFirst(req));
+    return;
+  }
+
+  // Manifest e service worker
+  if (url.pathname.endsWith('/manifest.json') || url.pathname.endsWith('/service-worker.js')) {
+    event.respondWith(networkFirst(req));
+    return;
+  }
+
+  // Risorse statiche
+  event.respondWith(cacheFirst(req));
 });
+
+async function networkFirst(req) {
+  const cache = await caches.open(CACHE);
+  try {
+    const fresh = await fetch(req, { cache: 'no-store' });
+    cache.put(req, fresh.clone());
+    return fresh;
+  } catch {
+    const cached = await cache.match(req);
+    return cached || new Response('Offline', { status: 503, statusText: 'Offline' });
+  }
+}
+
+async function cacheFirst(req) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(req);
+  if (cached) return cached;
+  const fresh = await fetch(req);
+  cache.put(req, fresh.clone());
+  return fresh;
+}
