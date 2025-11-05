@@ -43,7 +43,7 @@ body {
 
 h1.title,
 h2 {
-  font-size: 14px;           /* stessa dimensione per entrambe */
+  font-size: 14.5px;           /* stessa dimensione per entrambe */
   font-weight: 600;
   color: var(--text);
   margin-top: 16px;
