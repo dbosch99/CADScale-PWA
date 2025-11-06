@@ -9,6 +9,8 @@ const ASSETS = [
   '/styles.css',
   '/script.js',
   '/manifest.json',
+  '/cadscale-16.png',
+  '/cadscale-32.png',
   '/cadscale-192.png',
   '/cadscale-512.png',
   '/cadscale-1024.png'
