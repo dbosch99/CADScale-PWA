@@ -1,19 +1,17 @@
 // === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
-const CACHE = 'cadscale-7-11-2025';
+const CACHE = 'cadscale-6-11-2025';
 // ==========================================================================
 
 // Asset della PWA (percorsi assoluti)
 const ASSETS = [
-  '/CADScale-PWA/',
-  '/CADScale-PWA/index.html',
-  '/CADScale-PWA/styles.css',
-  '/CADScale-PWA/script.js',
-  '/CADScale-PWA/manifest.json',
-  '/CADScale-PWA/cadscale-16.png',
-  '/CADScale-PWA/cadscale-32.png',
-  '/CADScale-PWA/cadscale-192.png',
-  '/CADScale-PWA/cadscale-512.png',
-  '/CADScale-PWA/cadscale-1024.png'
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/script.js',
+  '/manifest.json',
+  '/cadscale-192.png',
+  '/cadscale-512.png',
+  '/cadscale-1024.png'
 ];
 
 // Install: precache
