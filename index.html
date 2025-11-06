@@ -1,5 +1,3 @@
-<!doctype html>
-<html lang="it">
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -9,31 +7,31 @@
   <meta name="theme-color" content="#111318">
 
   <!-- Manifest -->
-  <link rel="manifest" href="/CADScale-PWA/manifest.json">
+  <link rel="manifest" href="manifest.json">
 
   <!-- Icona PWA installata -->
-  <link rel="apple-touch-icon" href="/CADScale-PWA/cadscale-1024.png">
+  <link rel="apple-touch-icon" href="cadscale-1024.png">
   <meta name="apple-mobile-web-app-title" content="CADScale">
 
   <!-- Icone PWA per installazione -->
-  <link rel="icon" type="image/png" sizes="192x192" href="/CADScale-PWA/cadscale-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/CADScale-PWA/cadscale-512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="cadscale-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="cadscale-512.png">
 
-  <!-- Open Graph (anteprime / cronologia Safari) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="CADScale">
-  <meta property="og:image" content="/CADScale-PWA/cadscale-512.png">
-  <link rel="image_src" href="/CADScale-PWA/cadscale-512.png">
+  <meta property="og:image" content="cadscale-512.png">
+  <link rel="image_src" href="cadscale-512.png">
 
   <!-- Stili e script -->
-  <link rel="stylesheet" href="/CADScale-PWA/styles.css">
-  <script defer src="/CADScale-PWA/script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 
-  <!-- Registrazione SW -->
+  <!-- Registrazione SW (root) -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker
-          .register('/CADScale-PWA/service-worker.js', { scope: '/CADScale-PWA/' })
+          .register('/service-worker.js', { scope: '/' })
           .catch(console.error);
       });
     }
