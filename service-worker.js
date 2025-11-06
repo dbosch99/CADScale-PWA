@@ -1,8 +1,8 @@
 // === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
-const CACHE = 'cadscale-6-11-2025';
+const CACHE = 'cadscale-7-11-2025';
 // ==========================================================================
 
-// Asset della PWA (percorsi assoluti, niente ?v=… necessari)
+// Asset della PWA (percorsi assoluti)
 const ASSETS = [
   '/CADScale-PWA/',
   '/CADScale-PWA/index.html',
@@ -16,17 +16,17 @@ const ASSETS = [
   '/CADScale-PWA/cadscale-1024.png'
 ];
 
-// Install: cache degli asset di shell
-self.addEventListener('install', (event) => {
+// Install: precache
+self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     await cache.addAll(ASSETS);
-    await self.skipWaiting();
+    // niente skipWaiting: il nuovo SW diventa attivo al prossimo riavvio
   })());
 });
 
-// Activate: elimina cache precedenti
-self.addEventListener('activate', (event) => {
+// Activate: elimina cache precedenti e prendi controllo dei nuovi client
+self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
@@ -34,16 +34,12 @@ self.addEventListener('activate', (event) => {
   })());
 });
 
-// Messaggi dalla pagina (usato dal tuo index.html per SKIP_WAITING)
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
-});
-
-// Fetch:
-//  - HTML/manifest/SW → network-first (per aggiornarsi subito)
-//  - il resto → cache-first (veloce/offline)
-self.addEventListener('fetch', (event) => {
+// Fetch: network-first per HTML/manifest/SW, cache-first per il resto
+self.addEventListener('fetch', event => {
   const req = event.request;
+
+  if (req.method !== 'GET') return;
+
   const url = new URL(req.url);
 
   // Documenti / navigazioni
