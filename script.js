@@ -98,7 +98,7 @@ calc.addEventListener('click', ()=>{
     real.value = formatWithDecimal(Rnum, Rden);
     updateReadOnly();
   } else {
-    errorEl.textContent = 'Inserisci una scala in uno dei due campi';
+    errorEl.textContent = 'Inserisci una scala';
   }
 });
 
