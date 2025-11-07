@@ -7,40 +7,23 @@
   <meta name="theme-color" content="#111318">
 
   <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
 
-  <!-- Icona PWA installata -->
-  <link rel="apple-touch-icon" sizes="180x180" href="cadscale-180.png">
-  <link rel="apple-touch-icon" href="cadscale-1024.png">
-  <meta name="apple-mobile-web-app-title" content="CADScale">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="cadscale-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="cadscale-32.png">
+  <!-- Icona iOS (apple touch) -->
+  <link rel="apple-touch-icon" sizes="1024x1024" href="./cadscale-1024.png">
 
   <!-- Icone PWA -->
-  <link rel="icon" type="image/png" sizes="192x192" href="cadscale-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="cadscale-512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./cadscale-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./cadscale-512.png">
 
   <!-- Open Graph -->
   <meta property="og:title" content="CADScale">
-  <meta property="og:image" content="cadscale-512.png">
-  <link rel="image_src" href="cadscale-512.png">
+  <meta property="og:image" content="./cadscale-1024.png">
+  <link rel="image_src" href="./cadscale-1024.png">
 
   <!-- Stili e script -->
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
-
-  <!-- Registrazione SW -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/service-worker.js', { scope: '/' })
-          .catch(console.error);
-      });
-    }
-  </script>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./script.js"></script>
 </head>
 <body>
   <main class="card">
@@ -72,5 +55,16 @@
       <span id="error" class="error"></span>
     </div>
   </main>
+
+  <!-- Registrazione Service Worker per GitHub Pages (scope relativo alla cartella del progetto) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('./service-worker.js', { scope: './' })
+          .catch(console.error);
+      });
+    }
+  </script>
 </body>
 </html>
