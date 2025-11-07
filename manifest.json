@@ -29,6 +29,11 @@
       "type": "image/png",
       "purpose": "any maskable"
     },
+     {
+      "src": "cadscale-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
     {
       "src": "cadscale-1024.png",
       "sizes": "1024x1024",
