@@ -1,20 +1,17 @@
 // === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
-const CACHE = 'cadscale-2-11-2025';
+const CACHE = 'cadscale-7-11-2025';
 // ==========================================================================
 
-// Asset della PWA (percorsi assoluti)
+// Asset principali da mettere in cache (percorsi relativi per GitHub Pages)
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json',
-  '/cadscale-16.png',
-  '/cadscale-32.png',
-  '/cadscale-180.png',
-  '/cadscale-192.png',
-  '/cadscale-512.png',
-  '/cadscale-1024.png'
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './manifest.json',
+  './cadscale-192.png',
+  './cadscale-512.png',
+  './cadscale-1024.png'
 ];
 
 // Install: precache
@@ -22,7 +19,7 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     await cache.addAll(ASSETS);
-    // niente skipWaiting: il nuovo SW diventa attivo al prossimo riavvio
+    // nessuno skipWaiting: il nuovo SW diventa attivo al prossimo riavvio
   })());
 });
 
@@ -38,7 +35,6 @@ self.addEventListener('activate', event => {
 // Fetch: network-first per HTML/manifest/SW, cache-first per il resto
 self.addEventListener('fetch', event => {
   const req = event.request;
-
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
@@ -63,7 +59,7 @@ async function networkFirst(req) {
   const cache = await caches.open(CACHE);
   try {
     const fresh = await fetch(req, { cache: 'no-store' });
-    cache.put(req, fresh.clone());
+    if (fresh.ok) cache.put(req, fresh.clone());
     return fresh;
   } catch {
     const cached = await cache.match(req);
@@ -76,6 +72,6 @@ async function cacheFirst(req) {
   const cached = await cache.match(req);
   if (cached) return cached;
   const fresh = await fetch(req);
-  cache.put(req, fresh.clone());
+  if (fresh.ok) cache.put(req, fresh.clone());
   return fresh;
 }
