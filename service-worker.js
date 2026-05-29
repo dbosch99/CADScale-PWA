@@ -1,5 +1,5 @@
 // === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
-const CACHE = 'cadscale-7-11-2025';
+const CACHE = 'cadscale-29-05-2026';
 // ==========================================================================
 
 // Asset principali da mettere in cache (percorsi relativi per GitHub Pages)
@@ -9,9 +9,12 @@ const ASSETS = [
   './styles.css',
   './script.js',
   './manifest.json',
-  './cadscale-192.png',
-  './cadscale-512.png',
-  './cadscale-1024.png'
+
+  './CADScale-16.png',
+  './CADScale-32.png',
+  './CADScale-180.png',
+  './CADScale-192.png',
+  './CADScale-512.png'
 ];
 
 // Install: precache
