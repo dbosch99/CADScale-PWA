@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CADScale</title>
+  <meta name="theme-color" content="#111318">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- Icone sito / PWA -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./CADScale-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./CADScale-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./CADScale-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./CADScale-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./CADScale-512.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CADScale">
+  <meta property="og:image" content="./CADScale-512.png">
+  <link rel="image_src" href="./CADScale-512.png">
+
+  <!-- Stili e script -->
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./script.js"></script>
+</head>
+<body>
+  <div class="theme-toggle" id="themeToggleWrapper">
+    <button id="themeToggle" type="button">Dark mode</button>
+  </div>
+
+  <main class="card">
+    <h1 class="title">
+      Scala desiderata, modello in
+      <select id="unit" class="unit-pick" aria-label="Unità modello">
+        <option>mm</option>
+        <option>cm</option>
+        <option>dm</option>
+        <option selected>m</option>
+        <option>dam</option>
+        <option>hm</option>
+        <option>km</option>
+      </select>
+    </h1>
+
+    <div class="row">
+      <input id="real" placeholder="Es. 1:200 • 0,5 • 1/2" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
+    </div>
+
+    <h2>Scala layout di AutoCAD (in mm)</h2>
+    <div class="row">
+      <input id="acad" placeholder="Es. 1000:200 • 5 • 5/1" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
+    </div>
+
+    <div class="row buttons">
+      <button id="calc">Calcola</button>
+      <button id="reset" class="secondary">Reset</button>
+      <span id="error" class="error"></span>
+    </div>
+  </main>
+
+  <!-- Registrazione Service Worker per GitHub Pages (scope relativo alla cartella del progetto) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('./service-worker.js', { scope: './' })
+          .catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
