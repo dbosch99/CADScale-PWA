@@ -1,5 +1,5 @@
 // === CADScale SW: cambia SOLO questa riga quando vuoi forzare un refresh ===
-const CACHE = 'cadscale-29-05-2026';
+const CACHE = 'cadscale-30-05-2026_A';
 // ==========================================================================
 
 // Asset principali da mettere in cache (percorsi relativi per GitHub Pages)
